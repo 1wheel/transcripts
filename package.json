@@ -1,0 +1,16 @@
+{
+  "version"      : "0.0.1",
+  "dependencies" : {
+    "express"    : "latest",
+    "dsv"        : "0.0.3",
+    "request"    : "latest",
+    "d3"         : "latest",
+    "underscore" : "latest",
+    "queue-async": "latest",
+    "cheerio"    : "latest",
+    "glob"       : "latest",
+    "forte-f"    : "latest",
+    "lodash"    : "latest",
+    "indian-ocean": "latest"
+  }
+}
