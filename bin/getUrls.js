@@ -9,8 +9,8 @@ var q = queue(15)
 
 var articles = []
 
-// d3.range(1, 3335).forEach(function(i){
-d3.range(1, 15).forEach(function(i){
+// d3.range(1, 15).forEach(function(i){
+d3.range(1, 3335).forEach(function(i){
   q.defer(function(cb){
     var url = 'http://seekingalpha.com/earnings_center/transcripts/all/' + i
   
