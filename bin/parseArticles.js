@@ -26,6 +26,7 @@ function parseArticle(article, cb){
     var $ = cheerio.load(html)
     article.intro = $('#article_content').text()
     cb()
+    console.log(count++)
   })
 }
 
@@ -36,5 +37,3 @@ q.awaitAll(function(){
 
 
 function noop(){}
-
-
