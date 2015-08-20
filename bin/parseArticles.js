@@ -26,7 +26,8 @@ function parseArticle(article, cb){
     var $ = cheerio.load(html)
     article.intro = $('#article_content').text()
     cb()
-    console.log(count++)
+    count++
+    if (!(count % 100)) console.log(count)
   })
 }
 

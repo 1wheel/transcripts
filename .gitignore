@@ -28,5 +28,7 @@ node_modules
 
 
 data/articles.csv
+data/calls.csv
 .Rproj.user
 raw-html
+
