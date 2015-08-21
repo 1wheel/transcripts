@@ -6,7 +6,6 @@ var queue = require('queue-async')
 var cheerio = require('cheerio')
 
 
-
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -23,24 +22,15 @@ connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
 });
 
 
-
-
 var q = queue(500)
-
-var articles = io.readDataSync(__dirname + '/../data/articleUrls.csv')
 var count = 0
 
-articles.forEach(function(article){
-  q.defer(parseArticle, article)
-})
-
+var articles = io.readDataSync(__dirname + '/../data/articleUrls.csv')
+articles.forEach(function(article, i){ q.defer(parseArticle, article) })
 
 function parseArticle(article, cb){
   fs.readFile(__dirname + '/../raw-html/' + article.id + '.html', 'utf-8', function(err, html){
-    if (err){
-      cb()
-      return console.log(err)
-    }
+    if (err){ return console.log(err) && cb() }
 
     var $ = cheerio.load(html)
     var qMatch = $('title').text().match(/\sQ\d\s20\d\d\s/)
@@ -49,8 +39,7 @@ function parseArticle(article, cb){
     var quarter = qMatch[0].split(' ')[1]
     var year = qMatch[0].split(' ')[2]
 
-    var text = $('#article_content').text()
-
+    var text = $('#article_content').text().replace(/\n/g, '  ')
 
     var obj = {id: article.id, company: article.company, quarter: quarter, year: year, text: text}    
     connection.query('INSERT INTO calls SET ?', obj, function(err, rows, fields){
@@ -62,9 +51,4 @@ function parseArticle(article, cb){
 }
 
 
-q.awaitAll(function(){
-  fs.writeFile('articles.csv', d3.csv.format(articles)) 
-})
-
-
-function noop(){}
+q.awaitAll(function(){ console.log('done!') })

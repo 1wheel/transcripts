@@ -9,3 +9,7 @@ https://www.jasondavies.com/wordtree/?source=obama-war-speech.txt&prefix=Iraq&re
     CREATE DATABASE calls;
     create table calls (id varchar(10), company varchar(10), quarter varchar(2), year varchar(4), text text);
     drop table calls;
+
+Clean up tr
+
+    tr < calls.csv -d '\000' > calls2.csv
