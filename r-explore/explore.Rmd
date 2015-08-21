@@ -1,0 +1,59 @@
+---
+   title: "R test"  
+   author: "Adam Pearce"  
+   output:  
+     html_document:  
+       keep_md: true  
+
+---
+```{r setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+Load data from URL
+```{r}
+require(data.table)
+library(ggplot2)
+library(dplyr)
+
+calls <- fread("../data/calls2.csv")
+```
+
+### ggplot2 test
+
+```{r}
+ggplot(mpg, aes(hwy)) + geom_histogram()
+```
+
+### Use dplyr mutate to add a time and length variable to each call
+```{r}
+calls <- calls %>%
+  mutate(length = nchar(text)) %>%
+  mutate(dateNum = as.numeric(year) + as.numeric(substr(x = quarter, start = 2, stop = 2))/4 - .25) %>%
+  filter(dateNum < 2016) %>%
+  filter(length > 0)
+```
+
+
+### Histogram of call lengths - I've filtered out 0 length calls
+```{r}
+ggplot(calls, aes(length)) + geom_histogram(binwidth=1000)
+```
+
+
+### Histogram of call quarter - not sure why the number falls off in 2010
+there were also calls after 2016 - need to check the the parsing script is working
+```{r}
+ggplot(calls, aes(dateNum)) + geom_histogram(binwidth=.25)
+```
+
+### Scatter of quarter v length - looks like adverage length is decreasing
+```{r}
+ggplot(calls, aes(dateNum, length)) + geom_point() + geom_quantile(quantiles = c(.1, .25, .5, .75, .9))
+```
+
+
+### Violin of date v length - calls are getting shorter AND the number of very short calls is decreasing
+```{r}
+ggplot(calls, aes(year, length)) + geom_violin()
+```
