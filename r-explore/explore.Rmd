@@ -57,3 +57,35 @@ ggplot(calls, aes(dateNum, length)) + geom_point() + geom_quantile(quantiles = c
 ```{r}
 ggplot(calls, aes(year, length)) + geom_violin()
 ```
+
+
+### Add a dummy variable counting millennial usage
+```{r}
+str_count(tolower(states), vowels[j])
+```
+
+### Chart millennial word count over time
+```{r}
+
+```
+
+### Millenial density over time
+```{r}
+
+```
+
+### Millennial density when used
+```{r}
+
+```
+
+
+### Number of docs using millennial over time
+```{r}
+
+```
+
+### Density of docs using millennial over time
+```{r}
+
+```
