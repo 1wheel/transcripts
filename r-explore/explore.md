@@ -45,7 +45,7 @@ Read 37.1% of 80757 rows
 Read 61.9% of 80757 rows
 Read 74.3% of 80757 rows
 Read 99.1% of 80757 rows
-Read 80757 rows and 5 (of 5) columns from 1.283 GB file in 00:00:10
+Read 80757 rows and 5 (of 5) columns from 1.283 GB file in 00:00:09
 ```
 
 ### ggplot2 test
@@ -110,3 +110,30 @@ ggplot(calls, aes(year, length)) + geom_violin()
 ```
 
 ![](explore_files/figure-html/unnamed-chunk-7-1.png) 
+
+
+### Add a dummy variable counting millennial usage
+
+```r
+str_count(tolower(states), vowels[j])
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "str_count"
+```
+
+### Chart millennial word count over time
+
+
+### Millenial density over time
+
+
+### Millennial density when used
+
+
+
+### Number of docs using millennial over time
+
+
+### Density of docs using millennial over time
+
