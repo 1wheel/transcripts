@@ -15,22 +15,18 @@ Load data from URL
 require(data.table)
 library(ggplot2)
 library(dplyr)
+library(stringr)
 
 calls <- fread("../data/calls2.csv")
 ```
 
-### ggplot2 test
-
-```{r}
-ggplot(mpg, aes(hwy)) + geom_histogram()
-```
 
 ### Use dplyr mutate to add a time and length variable to each call
 ```{r}
 calls <- calls %>%
   mutate(length = nchar(text)) %>%
   mutate(dateNum = as.numeric(year) + as.numeric(substr(x = quarter, start = 2, stop = 2))/4 - .25) %>%
-  filter(dateNum < 2016) %>%
+  filter(dateNum < 2015.5) %>%
   filter(length > 0)
 ```
 
@@ -61,17 +57,23 @@ ggplot(calls, aes(year, length)) + geom_violin()
 
 ### Add a dummy variable counting millennial usage
 ```{r}
-str_count(tolower(states), vowels[j])
+calls <- calls %>%
+  mutate(wc = str_count(text, ignore.case("prosecute")))
+
+byQ <- calls %>% 
+  group_by(dateNum) %>% 
+  summarize(length=sum(length), totalwc=sum(wc))
 ```
 
 ### Chart millennial word count over time
 ```{r}
+ggplot(byQ, aes(dateNum, totalwc)) + geom_bar(stat='identity')
 
 ```
 
 ### Millenial density over time
 ```{r}
-
+ggplot(byQ, aes(dateNum, totalwc/length)) + geom_bar(stat='identity')
 ```
 
 ### Millennial density when used
